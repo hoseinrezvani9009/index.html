@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en">  <head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>NoaDrop Airdrop</title>  
+  <style>  
+    body { font-family: sans-serif; background: #111; color: white; padding: 20px; }  
+    .task { background: #222; margin-bottom: 12px; padding: 15px; border-radius: 12px; }  
+    .task h3 { margin: 0 0 10px; font-size: 18px; }  
+    .task button { padding: 8px 12px; border: none; background: #2c7dfa; color: white; border-radius: 6px; cursor: pointer; }  
+    .task button[disabled] { background: gray; cursor: not-allowed; }  
+    #wallet-modal {  
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;   
+      background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center;  
+    }  
+    #wallet-box {  
+      background: #1e1e1e; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px;  
+    }  
+    .wallet-option { background: #2c2c2c; padding: 10px; margin-top: 10px; border-radius: 6px; cursor: pointer; text-align: center; }  
+  </style>  
+</head>  
+<body>  
+  <h1>NoaDrop Airdrop</h1>  
+  <div id="coins">Total Coins: 0</div>  
+  <div id="task-list"></div>  
+  <br>  
+  <button onclick="showWalletModal()">اتصال کیف پول</button>  <div id="wallet-modal">  
+    <div id="wallet-box">  
+      <h3>اتصال کیف پول</h3>  
+      <div class="wallet-option" onclick="connectWallet('MetaMask')">MetaMask</div>  
+      <div class="wallet-option" onclick="connectWallet('WalletConnect')">WalletConnect</div>  
+      <div class="wallet-option" onclick="connectWallet('Trust Wallet')">Trust Wallet</div>  
+      <br>  
+      <button onclick="closeWalletModal()">بستن</button>  
+    </div>  
+  </div>  <script>  
+    let coins = 0;  
+    const tasks = [  
+      { title: "Join @noa_airdrop", link: "https://t.me/noa_airdrop", reward: 50 },  
+      { title: "Join sponsor channel", link: "https://t.me/sponsor_channel", reward: 30 },  
+      { title: "Join Telegram group", link: "https://t.me/+z2xV2xJUENo3MDdk", reward: 40 },  
+      { title: "Start Pixel Bot", link: "https://t.me/pixelversexyz_miror_bot", reward: 70 },  
+      { title: "Start Another Airdrop Bot", link: "https://t.me/airdrop_hunter_bot", reward: 50 },  
+      { title: "Daily Claim", link: null, reward: 20, daily: true }  
+    ];  function updateCoins() {  
+  document.getElementById("coins").textContent = `Total Coins: ${coins}`;  
+}  
+
+function handleClick(task, btn) {  
+  if (task.link) window.open(task.link, '_blank');  
+  btn.disabled = true;  
+  btn.textContent = "در حال انتظار...";  
+  setTimeout(() => {  
+    coins += task.reward;  
+    updateCoins();  
+    btn.textContent = `+${task.reward} دریافت شد`;  
+  }, 2000);  
+}  
+
+const taskList = document.getElementById("task-list");  
+tasks.forEach(task => {  
+  const div = document.createElement("div");  
+  div.className = "task";  
+
+  const h3 = document.createElement("h3");  
+  h3.textContent = task.title;  
+  div.appendChild(h3);  
+
+  const btn = document.createElement("button");  
+  btn.textContent = task.daily ? "Claim" : "Start Task";  
+  btn.onclick = () => handleClick(task, btn);  
+
+  div.appendChild(btn);  
+  taskList.appendChild(div);  
+});  
+
+function showWalletModal() {  
+  document.getElementById("wallet-modal").style.display = "flex";  
+}  
+
+function closeWalletModal() {  
+  document.getElementById("wallet-modal").style.display = "none";  
+}  
+
+function connectWallet(name) {  
+  alert(`${name} انتخاب شد (در نسخه واقعی باید کیف پول متصل شود)`);  
+  closeWalletModal();  
+}  
+
+updateCoins();
+
+</script></body>
+
+</html>
